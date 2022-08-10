@@ -38,7 +38,7 @@ for tc in range(1, T+1):
     print(f"#{tc}")
     for i in range(n):
         for j in range(n):
-            
+            print(snail[i][j], end='')
    
 
    

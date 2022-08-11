@@ -28,7 +28,7 @@ for tc in range(1, T+1):
             d= (d+i)%4
             ni = ci +di[d]
             nj = cj +dj[d]
-            #만약 갈수 있는 방향이었다면 방향 바꾸기 종료
+            #만약 갈수 있는 방향이없다면 방향 바꾸기 종료
             if 0<=ni<n and 0<=nj<n and snail[ni][nj] == 0:
                 ci=ni
                 cj=nj
@@ -38,6 +38,7 @@ for tc in range(1, T+1):
     print(f"#{tc}")
     for i in range(n):
         for j in range(n):
+            
             
    
 

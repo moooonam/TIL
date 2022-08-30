@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{pick}} 은 {{pick|length}} 글자</h1>
+    <h1>{{foods|join:", "}}<h1>
+
+    <h1>메뉴판</h1>
+    <ul>
+        {% for food in foods%}
+            <li>{{food}}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for num in my_num%}
+            {% if num > 5 %}
+                <ul>{{num}}는 5보다큼</ul>
+            {% else %}        
+               <ul>{{num}}는 5보작거나 같음</ul>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <a href="/index/">뒤로</a>
+    <a href="/greeting/">인사</a>
+
+    <h1>truncatewords 테스트</h1>
+    <h1>{{foods|truncatewords:3}}</h1>
+    <h1>{{words|truncatewords:4}}</h1>
+    {#이건 한줄주석이야#}
+
+    {%  comment %}
+    이건 여러줄 주석이야
+    {% endcomment %}
+</body>
+</html>

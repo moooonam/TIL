@@ -25,8 +25,8 @@
             {% endif %}
         {% endfor %}
     </ul>
-    <a href="/index/">뒤로</a>
-    <a href="/greeting/">인사</a>
+    <a href="{% url 'articles:index' %}">뒤로</a>
+    <a href="{% url 'articles:greeting' %}">인사</a>
 
     <h1>truncatewords 테스트</h1>
     <h1>{{foods|truncatewords:3}}</h1>

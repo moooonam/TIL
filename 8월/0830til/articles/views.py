@@ -5,7 +5,7 @@ from django.shortcuts import render
 def index(request):
     # request : 사용자의 요청 정보가 담겨있다.
     # 사용자에게 보여줄 화면 html 파일이름
-    return render(request, 'index.html')
+    return render(request, 'articles/index.html')
 
 def greeting(request):
     foods = ["치킨","피자","삼겹살",]
@@ -14,7 +14,7 @@ def greeting(request):
         "foods" : foods,
         "info" : info,        
         }
-    return render(request, 'greeting.html', context)
+    return render(request, 'articles/greeting.html', context)
 def dinner(request):
     foods = ["치킨","피자","삼겹살","수박","텐동",]
     pick = random.choice(foods)
@@ -26,10 +26,10 @@ def dinner(request):
         'words':words,
         'my_num':my_num,
     }
-    return render(request, 'dinner.html',context)
+    return render(request, 'articles/dinner.html',context)
 
 def throw(request):
-    return render(request, 'throw.html')
+    return render(request, 'articles/throw.html')
 
 def catch(request):
     print(request)
@@ -41,10 +41,10 @@ def catch(request):
     content = {
         'message':message,
     }
-    return render(request, "catch.html", content)
+    return render(request, "articles/catch.html", content)
 
 def hello(request, name):
     context = {
         'name':name,
     }
-    return render(request, 'hello.html',context)
+    return render(request, 'articles/hello.html',context)

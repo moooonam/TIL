@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>DETAIL</h1>
+    <hr>
+    <img src="{{movie.poster_url}}">
+    <p>{{movie.title}} </P>
+    <p> Audience: {{movie.audience}} </P>
+    <p> Release Dates: {{movie.release_date}} </P>
+    <p> genre: {{movie.genre}} </P>
+    <p> score: {{movie.score}} </P>
+    <p> {{movie.description}}</p>
+    <hr>
+    <a href="{% url 'movies:edit' movie.pk %}">EDIT</a><br>
+    <br>
+    <form action="{% url 'movies:delete' movie.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="DELETE">
+    </form>
+    <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="{% url 'movies:detail' movie.pk|add:-1  %}">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="{% url 'movies:detail' movie.pk|add:1  %}">Next</a></li>
+        </ul>
+      </nav>
+    <a href="{% url 'movies:index' %}">[back]</a>
+{% endblock content %}

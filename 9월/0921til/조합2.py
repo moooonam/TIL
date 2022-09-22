@@ -1,6 +1,6 @@
 def nCr(n,r,s):
     if r ==0:
-        print(*comb)
+        print(comb)
     else:
         for i in range(s, n-r+1):
             comb[r-1] = A[i]

@@ -10,4 +10,4 @@ for tc in range(1, T+1):
         arr[x][y] =w
     print(arr)
     
-    
+#

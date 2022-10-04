@@ -25,6 +25,6 @@ for tc in range(1, T+1):
     for i in range(M):
         x= pair[i*2]
         y= pair[i*2 +1]
-        unino(x,y)
+        union(x,y)
     reps= set()
    

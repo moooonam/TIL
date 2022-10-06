@@ -7,7 +7,7 @@
   {% endif %}
   <hr>
   {% for article in articles %}
-    <P><b>작성자: {{article.user}}</b></P>
+    <p><b>작성자 : {{ article.user }}</b></p>
     <p>글 번호 : {{ article.pk }}</p>
     <p>제목 : {{ article.title }}</p>
     <p>내용 : {{ article.content }}</p>

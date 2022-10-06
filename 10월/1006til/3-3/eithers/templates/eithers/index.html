@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>INDEX</h1>
+  <hr>
+  <ul>
+    {% for either in eithers %}
+      <p>{{either.pk}}번 이슈</p>
+      <h2>{{either.title}}</h2>
+      <a href="{% url 'eithers:detail' either.pk %}">DETAIL</a>
+    <hr>
+    {%empty%}
+      <li>아무것도 없으..</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>CREATE</h1>
+  <a href="{% url 'eithers:detail' either.pk %}">뒤로가기</a>
+  <hr>
+  <form action="{% url 'eithers:update' either.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+  </form>
+  <hr>
+{% endblock content %}

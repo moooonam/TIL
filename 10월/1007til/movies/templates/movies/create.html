@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<h1>CREATE</h1>
+<form action="{% url 'movies:create' %}"method="POST">
+    {% csrf_token %}
+    {%bootstrap_form form%}
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+<hr>
+<a href="{% url 'movies:index'%}" class="btn btn-warning">BACK</a>
+{% endblock content %}

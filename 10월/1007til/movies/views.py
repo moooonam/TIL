@@ -1,27 +1,60 @@
-from django.shortcuts import render, redirect
-from django.views.decorators.http import require_http_methods, require_POST, require_safe
-from django.contrib.auth.decorators import login_required
-# from django.http import HttpResponse, HttpResponseForbidden
-from .models import Movie
-from .forms import MovieForm
+from django.shortcuts import render,redirect
+from django.views.decorators.http import require_GET,require_http_methods,require_POST,require_safe
 
+from movies.forms import MovieForm
+from .models import Movie
+
+# Create your views here.
+
+@require_safe
 def index(request):
     movies = Movie.objects.all()
     context = {
         'movies': movies,
     }
-    return render(request, 'moviess/index.html', context)
+    return render(request,'movies/index.html',context)
 
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(['GET','POST'])
 def create(request):
     if request.method == 'POST':
-        form = MovieForm(request.POST) 
+        form = MovieForm(request.POST)
         if form.is_valid():
-            either = form.save()
-            return redirect('movies:index')        
+            movie = form.save()
+            return redirect('movies:detail',movie.pk)
     else:
         form = MovieForm()
     context = {
-        'form': form,
+        'form':form,
     }
-    return render(request, 'movies/create.html', context)
+    return render(request, 'movies/create.html',context)
+
+@require_safe  
+def detail(request,pk):
+    movie = Movie.objects.get(pk=pk)
+    context = {
+        'movie':movie,
+    }
+    return render(request, 'movies/detail.html',context)
+
+@require_http_methods(['GET','POST'])
+def update(request,pk):
+    movie = Movie.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = MovieForm(request.POST,instance=movie)
+        if form.is_valid():
+            form.save()
+            return redirect('movies:detail',movie.pk)
+    else:
+        form = MovieForm(instance=movie)
+    context = {
+        'form':form,
+        'movie':movie,
+    }
+    return render(request,'movies/update.html',context)
+
+
+def delete(request,pk):    
+    movie = Movie.objects.get(pk=pk)
+    movie.delete()
+    return redirect('movies:index')
+

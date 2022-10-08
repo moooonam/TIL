@@ -1,50 +1,69 @@
 from django import forms
 from .models import Movie
 
-genre_choices = [('코미디', '코미디'), ('공포', '공포'), ('로맨스', '로맨스')]
 
 class MovieForm(forms.ModelForm):
     title = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'placeholder': 'Title',
-            'class': 'form-control'},
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'Title',
+                'maxlength':20,
+            }
         )
     )
     audience = forms.IntegerField(
-        widget = forms.NumberInput(
-            attrs = {'placeholder': 'Audience',
-            'class': 'form-control'},
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'Audience',
+            }
         )
     )
     release_date = forms.DateField(
-        widget = forms.DateInput(
-            attrs = {'placeholder': 'Release_date', 'class': 'form-control'},
+        widget=forms.DateInput(
+            attrs={
+                'placeholder':'연도-월-일',
+                'type':'date',
+            }
         )
     )
+    genres = [('코미디','코미디'), ('공포','공포'), ('로맨스','로맨스')]
     genre = forms.ChoiceField(
-        choices=genre_choices,
-        widget = forms.Select(
-            attrs = {'class': 'form-control'}
+        choices=genres, 
+        widget=forms.Select(
+            attrs={
+                'placeholder':'Genre',
+                'maxlength':30,
+            }
         )
     )
 
     score = forms.FloatField(
-        widget=forms.NumberInput(
-            attrs={'placeholder': 'Score', 'step':0.5, 'min':0, 'max':5,
-            'class': 'form-control'},
+        widget=forms.TextInput(
+            attrs={
+                'placeholder':'Score',
+                'type':'number',
+                'step':0.5,
+                'min':0,
+                'max':5,
+            }
         )
     )
-
     poster_url = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'placeholder': 'Poster_url', 'class': 'form-control'},
+        widget=forms.Textarea(
+            attrs={
+                'placeholder':'Poster url',
+
+            }
         )
     )
     description = forms.CharField(
-        widget = forms.TextInput(
-            attrs = {'placeholder': 'Description', 'class': 'form-control'},
+        widget=forms.Textarea(
+            attrs={
+                'placeholder':'Description',
+            }
         )
     )
+
     class Meta:
         model = Movie
         fields = '__all__'

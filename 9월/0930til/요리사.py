@@ -29,7 +29,6 @@ for tc in range(1, T+1):
                 sum_A+=arr[half_A[k][i]][half_A[k][j]]
                 sum_B+=arr[half_B[k][i]][half_B[k][j]]
         cha_list.append(abs(sum_A-sum_B))
-    print(half_A)
-    print(half_B)
+   
     print(f'#{tc} {min(cha_list)}')
 

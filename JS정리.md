@@ -301,4 +301,13 @@ console.log(bar)// 0
 - 함수의 정의
   - 함수 선언식(Function declaration)
     - 일반적인 프로그래밍 언어의 함수 정의 방식
+    ```js
+    function add(num1, num2) {
+      return num1 + num2
+    }
+    add(2, 7) //9
+    ```
+  - 함수 표현식(Function expression)
+    - 표현식 내에서 함수를 정의하는 방식
+    - 함수 표현식은 함수의 이름을 생략함 익명 함수로 정의 가능
     

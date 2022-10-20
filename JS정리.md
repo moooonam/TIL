@@ -310,4 +310,290 @@ console.log(bar)// 0
   - 함수 표현식(Function expression)
     - 표현식 내에서 함수를 정의하는 방식
     - 함수 표현식은 함수의 이름을 생략함 익명 함수로 정의 가능
+    ```js
+    const sub = function (num1, num2) {
+      return num1 - num2
+    }
+
+    sub(7, 2) //5
+    ```
+    - 표현식에서 함수 이름을 명시하는 것도 가능
+    - 다만 이 경우 함수 이름은 호출에 사용 되지 못하고 디버깅 용도로 사용됨
+    ```js
+    const mySub = function namedSub(num1, num2) {
+      return num1 - num2
+    }
+
+    mySub(1, 2) //-1
+    namedSub(1, 2) // ReferenceError: nameSub is not defined
+    ```
+  - 기본 인자(Default arguments)
+    - 인자 작성 시 '='문자 뒤 기본 인자 선언 가능
+    ```js
+    const greeting = function (name = 'Anonymous') {
+      return `Hi ${name}`
+    }
+
+    greeting() // Hi Anonymous
+    ```
+
+<br>
+
+  - 매개변수와 인자의 개수 불일치 허용
+    - 매개변수보다 인자의 개수가 많을 경우
+    ```js
+    const noArgs = function() {
+      return 0
+    }
+
+    noArgs(1, 2, 3) //0
+
+    const towArgs = function (arg1, arg2){
+      return [arg1, arg2]
+    }
+
+    towArgs(1, 2, 3) // [1,2]
+    ```
+    - 매개변수보다 인자의 개수가 적을 경우
+    ```js
+    const threeArgs = function (arg1, arg2, arg3) {
+      return [arg1, arg2, arg3]
+    }
+
+    threeArgs()  //[undefined, undefined, undefined]
+    threeArgs(1)  //[1, undefined, undefined]
+    threeArgs(1, 2)  //[1, 2, undefined]
+    ```
+
+<br>
+
+  - Spread syntax(...)
+    - "전개 구문"
+    - 전개 구문을 사용하면 배열이나 문자열과 같이 반복 가능한 객체를 배열의 경우는 요소, 함수의 경우는 인자로 확장할 수 있음
+    1. 배열과의 사용(배열 복사)
+    ```js
+    let parts = ['shoulders', 'Knees']
+    let lyrics = ['head', ...parts, 'and', 'toes']
+    // ['head', 'shoulders', 'Knees', 'and', 'toes']
+    ```
+
+    2. 함수와의 사용 (Rest parameters)
+      - 정해지지 않은 수의 매개변수를 배열로 받을 수 있음
+    ```js
+    const restOpr = function (arg1, arg2, ...restArgs) {
+      return [arg1, arg2, restArgs]
+    }
+
+    restArgs(1, 2, 3, 4, 5) // [1, 2, [3, 4, 5]]
+    restArgs(1, 2) // [1, 2, []]
+    ```
+<br>
+
+  - 선언식과 표현식
+    - 선언식 함수와 표현식 함수 타입은 function으로 동일
+    - 호이스팅 - 선언식
+      - 함수 선언식으로 정의한 함수는 var로 정의한 변수처럼 호이스팅이 발생
+      - 즉 함수 호출 이후에 선언해도 동작
+      ```js
+      add(2, 7) //9
+
+      function add (num1, num2) {
+        return num1 + num2
+      }
+      ```
+    - 호이스팅 - 표현식
+      - 반면 함수 표현식으로 선언한 함수는 함수 정의 전에 호출시 에러 발생
+      - 함수 표현식으로 정의된 함수는 변수로 평가되어 변수의 scope 규칙을 따름
+      ```js
+      sub(7, 2) //error 어쩌고 저쩌고
+
+      const sub = function (num1, num2) {
+        return num1 - num2
+      }
+      ```
+<br>
+
+  - **화살표 함수(Arrow Function)**
+    - "함수를 비교적 간결하게 정의할 수 있는 문법"
+    - functino 키워드와 중괄호를 이용한 구문을 짧게 사용하기 위해 탄생
+      1. function 키워드 생략 가능
+      2. 함수의 매개변수가 하나 뿐이라면 매개변수의 '()' 생략가능
+      3. 함수의 내용이 한줄이라면 '{}' 와 'return'도 생략 가능
+    - 화살표 함수는 항상 익명 함수
+    - 화살표 함수 예시
+    ```js
+    const arrow1 = function (name) {
+      return `hello, ${name}`
+    }
+
+    // 1. function 키워드 삭제
+    const arrow2 = (name) => { return `hello, ${name}` }
     
+    // 2. 인자가 1개일 경우에만 () 생략 가능
+    const arrow3 = name => { return `hello, ${name}`}
+
+    // 3. 함수 바디가 return을 포함한 표현식 1개일 경우에 {} & return 삭제 가능
+    const arrow4 = name => `hello, ${name}`
+
+    // 응용
+    // 1. 인자가 없다면? () or _로 표시 가능
+    let noArge = () => 'No args'
+    noArgs = _ => 'No args'
+
+    // 2-1. object를 return 한다면
+    let returnObject = () => { return { key: 'value'} }
+
+    // 2-2. return을 적지 않으려면 괄호를 붙여야 함
+    returnObject = () => ({key: 'value'})
+  
+    ```  
+
+<br>
+<hr>
+<br>
+
+>### 배열(Array)
+
+<br>
+
+- 배열(Array)
+  - 키와 속성들을 담고 있는 참조 타입의 객체
+  - 순서를 보장하는 특징이 있음
+  - 주로 대괄호([])를 이용하여 생성하고, 0을 포함한 양의 정수 인덱스로 특정 값에 접근 가능
+  - 배열의 길이는 array.length 형태로 접근 가능
+    - 배열의 마지막 원소는 array.length - 1로 접근
+- 배열 메서드 기초
+  - array.reverse()
+    - 원본 배열 요소들의 순서를 반대로 정렬
+  - array.push()
+    - 배열의 가장 뒤에 요소 추가
+  - array.pop()
+    - 배열의 마지막 요소 제거
+  - array.includes(value)
+    - 배열에 특정 값(value)이 존재하는지 판별 후 true 또는 false 반환
+  - array.indexOf(value)
+    - 배열에 특정 값이 존재하는지 확인 후 가장 첫 번째로 찾은 요소의 인덱스 반환
+    - 만약 해당 값이 없을 경우 -1 반환
+  - array.join([separator])
+    - 배열의 모든 요소를 연결하여 반환
+    - separator(구분자)는 선택적으로 지정 가능하며, 생략 시 쉼표를 기본 값으로 사용
+
+<br>
+
+- Array Helper methods
+  - 배열을 순회하며 특정 로직을 수행하는 메서드
+  - 메서드 호출 시 인자로 callback 함수를 받는 것이 특징
+  - callback 함수 : 어떤 함수의 내부에서 실행될 목적으로 인자로 넘겨받는 함수
+  - forEach
+    - 인자로 주어지는 함수(콜백 함수)를 배열의 각 요소에 대해 한 번씩 실행
+      - 콜백 함수는 3가지 매개변수로 구성
+        1. element: 배열의 요소
+        2. index: 배열 요소의 인덱스
+        3. array: 배열 자체
+      - 반환 값(return) 없음
+
+    ```js
+    array.forEach((element, index, array) => {
+      // do something
+    })
+    // 1. 일단 사용해보기
+    const colors = ['red', 'blue', 'green']
+
+    printFunc = function (color) {
+      console.log(color)
+    }
+    colors.forEach(printFunc)
+    // red
+    // blue
+    // green
+
+    // 2. 함수 정의를 인자로 넣어보기
+    colors.forEach(function (color) {
+      console.log(color)
+    })
+
+    // 3. 화살표 함수 적용하기
+    colors.forEach((color) => {
+      return console.log(color)
+    })
+    
+    ```
+<br>
+
+  - map
+    - 배열의 각 요소에 대해 콜백 함수를 한번씩 실행
+    - 콜백 함수의 반환 값을 요소로 하는 새로운 배열 반환
+    - 기존 배열 전체를 다른 형태로 바꿀 때 유용
+      - forEach + return 이라고 생각하기
+    ```js
+    array.map((element, index, array) => {
+      // do something
+    })
+
+    // 1. 일단 사용해보기
+    const numbers = [1, 2, 3]
+
+    // 함수 정의 (표현식)
+    const doubleFunc = function (number) {
+      return number * 2
+    }
+
+    // 함수를 다른 함수의 인자로 넣기(콜백 함수)
+    const doubleNumbers = numbers.map(doubleFunc)
+    console.log(doubleNumbers) // [2, 4, 6]
+
+    // 2. 함수 정의를 인자로 넣어보기
+
+    const doubleNumbers = numbers.map(function (number) {
+      return number * 2
+    }) 
+    console.log(doubleNumbers) // [2, 4, 6]
+
+    // 3. 화살표 함수 적용하기
+
+    const doubleNumbers = numbers.map((number) => {
+      return number * 2
+    })
+    console.log(doubleNumbers) // [2, 4, 6]
+    ```
+<br>
+
+  - filter
+    - 배열의 각 요소에 대해 콜백 함수를 한 번씩 실행
+    - 콜백 함수의 반환 값이 true인 요소들만 모아서 새로운 배열 반환
+    - 기존 배열의 요소들을 필터링할 때 유용
+    ```js
+    array.filter((element, index, array) => {
+      // do something
+    })
+
+    const products = [
+    { name : 'cucumber', type: 'vagetable' },
+    { name : 'banana', type: 'fruit' },
+    { name : 'carrot', type: 'vegetable' },
+    { name : 'apple', type: 'fruit' },
+    ]
+
+    //1.
+    const fruitFilter = function (product) {
+        return product.type === 'fruit'
+    }
+
+    const newArry = products.filter(fruitFilter)
+
+    console.log(newArry)
+    // [ { name : 'banana', type: 'fruit' }, { name : 'apple', type: 'fruit' } ]
+    //2. 함수 정의를 인자로 넣어보기
+    const newArry = products.filter( function (product) {
+        return product.type === 'fruit'
+    })
+
+    //3. 화살표 함수 적용하기
+    const newArry = products.filter((product)=> {
+        return product.type === 'fruit'
+    })
+    ```
+<br>
+
+  -
+

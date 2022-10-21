@@ -23,8 +23,6 @@ obj.greeting()
 
 
 
-
-
 // json 변환
 
 const jsonData ={

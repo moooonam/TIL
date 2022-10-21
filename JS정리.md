@@ -595,5 +595,143 @@ console.log(bar)// 0
     ```
 <br>
 
-  -
+  - reduce
+    - 인자로 주어지는 함수(콜백 함수)를 배열의 각 요소에 대해 한 번씩 실행해서, 하나의 결과 값을 반환
+    - 즉, 배열을 하나의 값으로 계산하는 동작이 필요한 때 사용(총합, 평균 등)
+    - map, filter 등 여러 배열 메서드 동작을 대부분 대체할 수 있음
+    - reduve 메서드의 주요 매개변수
+      - acc
+        - 이전 callback 함수의 반환 값이 누적되는 변수
+      - initialValue (optional)
+        - 최초 callback 함수 호출 시 acc에 할당되는 값, default 값은 배열의 첫 번째 값
+    - reduce의 첫번째 매개변수인 콜백함수의 첫번째 매개변수(acc)는 누적된 값(전 단계 까지의 결과)
+    - reduce의 두번째 매개변수인 initialValue 는 누적될 값의 초기값, 지정하지 않을 시 첫번째 요소의 값이 됨
+  ```js
+  array.reduce((acc, element, index, array) => {
+    // do something
+  }, initialValue)
+
+  const numbers =[90, 80, 70, 100]
+
+  // 총합
+
+  const sumNum = numbers.reduce(function (result, number) {
+      return result + number
+  }, 0)
+
+  console.log(sumNum)
+  
+  ///화살표 함수
+  const sumNum = numbers.reduce((result, number) => {
+      return result + number
+  }, 0)
+
+  //평균
+  const avgNum = numbers.reduce((result, number) => result + number, 0) / numbers.length
+  ```
+
+<br>
+
+  - find
+    - 배열의 각 요소에 대해 콜백 함수를 한 번씩 실행
+    - 콜백 함수의 반환 값이 true면, 조건을 만족하는 첫번째 요소를 반환
+    - 찾는 값이 배열에 없으면 undefined 반환
+  ```js
+  array.find((element, index, array)) {
+    // do something
+  }
+  const avengers =[
+    { name: 'Tony Stark', age: 45 },
+    { name: 'Steve Rogers', age: 32 },
+    { name: 'Thor', age: 40 },
+  ]
+
+  const avenger = avengers.find((avenger) => {
+      return avenger.name ==='Tony Stark'
+  })
+
+  console.log(avenger)
+  ```
+<br>
+
+  - some
+    - 배열의 요소 중 하나라도 주어진 판별 함수를 통과하면 true 반환
+    - 모든 요소가 통과하지 못하면 거짓 반환
+    - 빈 배열은 항상 false 반환
+  ```js
+  const arr = [1, 2, 3, 4, 5]
+
+  const result = arr.some((elem) => elem % 2 === 0)
+
+  console.log(result) // true
+
+  ```
+
+<br>
+
+  - every
+    - 배열의 모든 요소가 주어진 판별 함수를 통과하면 true 반환
+    - 하나의 요소라도 통과하지 못하면 false 반환
+    - 빈 배열은 항상 true 반환
+  ```js
+  const arr = [1, 2, 3, 4, 5]
+  const result = arr.every((elem) => elem % 2 === 0)
+
+  console.log(result) // false
+  ```
+
+<br>
+<hr>
+<br>
+
+>### 객체(Object)
+
+<br>
+
+- 개요
+  - 객체는 속성(property)의 집합이며, 중괄호 내부에 key와 value의 쌍으로 표현
+  - key
+    - 문자열 타입만 가능
+    - key 이름에 띄어쓰기 등의 구분자가 있으면 따옴표로 묶어서 표현
+  - value
+    - 모든 타입(합수포함)가능
+  - 객체 요소 접근
+    - 점(.) 또는 대괄호([])로 가능
+    - key 이름에 띄어쓰기 같은 구분자가 있으면 대괄호 접근만 가능
+  ```js
+  // 객체 예시
+  const myInfo ={
+    name: 'jack',
+    phoneNumber: '123123',
+    'samsung product' : {
+        buds: 'Buds pro',
+        galaxy: 'S99', 
+    },
+  }
+  console.log(myInfo.name)
+  console.log(myInfo['name'])
+  console.log(myInfo['samsung product'])
+  console.log(myInfo['samsung product'].galaxy)
+  // json 변환
+
+  const jsonData ={
+      coffee: 'Americano',
+      iceCream: 'Mint Choco',
+  }
+  // Object -> json
+  const objToJson = JSON.stringify(jsonData)
+
+  console.log(objToJson) //{"coffee":"Americano","iceCream":"Mint Choco"}
+  console.log(typeof objToJson) //string
+
+  // json -> Object
+  const jsonToObj = JSON.parse(objToJson)
+
+  console.log(jsonToObj) //{ coffee: 'Americano', iceCream: 'Mint Choco' }
+  console.log(typeof jsonToObj) //object
+
+  console.log(jsonToObj.coffee) // Americano
+  
+  ```
+
 

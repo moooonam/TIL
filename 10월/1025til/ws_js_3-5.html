@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		const formTag = document.createElement('form')
+
+		formTag.setAttribute("action", "#")
+
+		const bodyTag = document.querySelector('body')
+		bodyTag.appendChild(formTag)
+
+		const inputTag1 = document.createElement('input')
+		const inputTag2 = document.createElement('input')
+		formTag.appendChild(inputTag1)
+		formTag.appendChild(inputTag2)
+
+		inputTag1.setAttribute("type", "text")
+		inputTag2.setAttribute("type", "submit")
+		inputTag2.setAttribute("value", "Add")
+
+		const ulTag = document.createElement('ul')
+		bodyTag.appendChild(ulTag)
+		
+		formTag.addEventListener('submit', function (event){
+			event.preventDefault()
+			const data = inputTag1.value
+			
+			if (data.trim()) {
+				const liTag = document.createElement('li')
+				liTag.innerText = data
+				ulTag.appendChild(liTag)
+			} else {
+				alert('입력해!')
+			}
+			event.target.reset()
+		})
+
+
+
+
+		
+
+
+	</script>
+</body>
+
+</html>

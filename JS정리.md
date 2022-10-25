@@ -764,3 +764,81 @@ console.log(bar)// 0
   - DOM을 사용하기 위해 특별히 해야 할 일은 없음
   - 모든 웹 브라우저는 스크립트 언어가 접근할 수 있는 웹페이지를 만들기 위해 DOM을 항상 사용함
   - "DOM의 주요객체"들을 활용하여 문서를 조작하거나 특성 요소들을 얻을 수 있음
+- DOM의 주요 객체
+  - window
+  - document
+  - navigator, location, history, screen 등
+- window object
+  - DOM을 표현하는 창
+  - 가장 최상위 객체(작성 시 생략 가능)
+  - 탭 기능이 있는 브라우저에서는 각각의 탭을 각각의 window 객체로 나타냄
+- document object
+  - 브라우저가 불러온 웹 페이지
+  - 페이지 컨텐츠의 진입점 역할을 하며, `<body>` 등과 같은 수많은 다른 요소들을 포함하고 있음
+
+
+<br>
+<hr>
+<br>
+
+>### DOM 조작
+
+<br>
+
+- DOM 조작 순서
+  1. 선택(Select)
+  2. 조작(Manipulation)
+    - 생성, 추가, 삭제 등  
+
+- 선택 관련 메서드
+  - document.querySelector(selector)
+    - 제공한 선택자와 일치하는 element 한개 선택
+    - 제공한 CSS selector를 만족하는 첫번째 element 객체를 반환 (없다면 null 반환)
+  - document.querySelectorAll(selector)
+    - 제공한 선택자와 일치하는 여러 element를 선택
+    - 매칭 할 하나 이상의 셀렉터를 포함하는 유효한 CSS selector를 인자(문자열)로 받음
+    - 제공한 CSS selector를 만족하는 NodeList를 반환
+    - 참고: NodeList
+      - index로만 각 항목에 접근 가능
+      - 배열의 forEach 메서드 및 다양한 배열 메서드 사용 가능
+      - querySelectorAll()에 의해 반환되는 NodeList는 DOM의 변경사항을 실시간으로 반영하지 않음
+
+<br>
+
+- 조작 관련 메서드
+  - document.createElement(tagName)
+    - 작성한 tagName의 HTML 요소를 생성하여 반환
+  - Node.innerText
+    - Node 객체와 그 자손의 텍스트 컨텐츠(DOMString)를 표현
+    - 사람이 읽을 수 있는 요소만 남김
+    - 즉, 줄 바꿈을 인식하고 숨겨진 내용을 무시하는 등 최종적으로 스타일링이 적용된 모습으로 표현
+  - Node.appendChild()
+    - 한 Node를 특정 부모 Node의 자식 NodeList 중 마지막 자식으로 삽입
+    - 한번에 오직 하나의 Node만 추가할 수 있음
+    - 추가된 Node 객체를 반환
+    - 만약 주어진 Node가 이미 문서에 존재하는 다른 Node를 참조한다면 현재 위치에서 새로운 위치로 이동
+  - Node.removeChild()
+    - DOM에서 자식 Node를 제거
+    - 제거된 Node를 반환
+  - Element.getAttribute(attributeName)
+    - 해당 요소의 지정된 값(문자열)을 반환
+    - 인자(attributeName)는 값을 얻고자 하는 속성의 이름
+  - Element.setAttribute(name, value)
+    - 지정된 요소의 값을 설정
+    - 속성이 이미 존재하면 값을 갱신, 존재하지 않으면 지정된 이름과 값으로 새 속성을 추가
+
+- 조작 관련은 1024til 참고
+
+
+<br>
+<hr>
+<br>
+
+>### Event
+
+<br>
+
+- Event란 프로그래밍하고 있는 시스템에서 일어나는 사건 혹은 발생인데, 우리가 원한다면 그것들에 어떠한 방식으로 응답할 수 있도록 시스템이 말해주는 것
+  - 예를 들어 사용자가 웹 페이지의 버튼을 클릭한다면 우리는 클릭이라는 사건에 대해 결과를 응답 받기를 원할 수 있음
+- 클릭 말고도 웹에서는 각양각색의 Event가 존재
+  - 키보드 키 입력, 브라우저 닫기, 데이터 제출, 텍스트 복사 등

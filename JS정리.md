@@ -827,7 +827,7 @@ console.log(bar)// 0
     - 지정된 요소의 값을 설정
     - 속성이 이미 존재하면 값을 갱신, 존재하지 않으면 지정된 이름과 값으로 새 속성을 추가
 
-- 조작 관련은 <a hrdf="https://github.com/moooonam/TIL/tree/master/10%EC%9B%94/1024til">1024til</a> 참고
+- 조작 관련은 <a href="https://github.com/moooonam/TIL/tree/master/10%EC%9B%94/1024til">1024til</a> 참고
 
 
 <br>

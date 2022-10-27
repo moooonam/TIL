@@ -842,3 +842,35 @@ console.log(bar)// 0
   - 예를 들어 사용자가 웹 페이지의 버튼을 클릭한다면 우리는 클릭이라는 사건에 대해 결과를 응답 받기를 원할 수 있음
 - 클릭 말고도 웹에서는 각양각색의 Event가 존재
   - 키보드 키 입력, 브라우저 닫기, 데이터 제출, 텍스트 복사 등
+- Event object
+  - 네트워크 활동이나 사용자와의 상호작용 같은 사건의 발생을 알리기 위한 객체
+  - Event 발생
+    - 마우스를 클릭하거나 키보드를 누르는 등 사용자 행동으로 발생할 수도 있고
+    - 특정 메서드를 호출하여 프로그래밍적으로도 만들어 낼 수 있음
+  - DOM 요소는 Event를 받고("수신")
+  - 받은 Event를 "처리"할 수 있음
+    - Event 처리는 주로 addEventListener()라는 Event 처리기(Event handler)를 다양한 html 요소에 "부착"해서 처리함
+- Event handler - addEventListener()
+  - "<span style="color:red">대상</span>에 <span style="color:green">특정 Event</span>가 발생하면, <span style="color:blue">할 일</span>을 등록하자"
+  - <span style="color:red">EventTarget</span>.addEventListener( <span style="color:green">type</span>, <span style="color:blue">listener</span>)
+  - EventTarget.addEventListener(type, listener[, options])
+    - 지정한 Event가 대상에 전달될 때마다 호출할 함수를 설정
+    - Event를 지원하는 모든 객체(Element, Document, Window 등)를 대상(EventTarget)으로 지정 가능
+    - type
+      - 반응 할 Event 유형을 나타내는 대소문자 구분 문자열
+      - 대표 이벤트
+        - input, click, submit ....
+    - listener
+      - 지정된 타입의 Event를 수신할 객체
+      - JavaScript function 객체(콜백 함수)여야 함
+      - 콜백 함수는 발생한 Event의 데이터를 가진 Event 객체를 유일한 매개변수로 받음
+- 실습은 <a href="https://github.com/moooonam/TIL/tree/master/10%EC%9B%94/1024til">1024til</a> 참고 
+
+<br>
+
+- event.preventDefault()
+  - 현재 Event의 기본 동작을 중단
+  - HTML 요소의 기본 동작을 작동하지 않게 막음
+  - HTML 요소의 기본 동작 예시
+    - a 태그: 클릭 시 특정 주소로 이동
+    - form 태그: form 데이터 전송

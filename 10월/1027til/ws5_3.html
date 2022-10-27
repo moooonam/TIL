@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h1>인기 영화들</h1>
+	<ul></ul>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script>
+		const movieUrl = 
+		"https://api.themoviedb.org/3/discover/movie?api_key=d8571ea4e34547d3f50e1b1d59d7945d&language=ko-KR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate"
+		axios.get(movieUrl)
+			.then((response) => {
+				const movies = response.data.results
+				// console.log(response.data.results[1])
+				movies.forEach((movie) =>{
+					if (movie.vote_average >= 7) {
+						const liTag = document.createElement('li')
+						ulTag = document.querySelector('ul')
+						ulTag.appendChild(liTag)
+						liTag.innerText = movie.title
+					}
+				})
+			}
+			)
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>DETAIL</h2>
+  <h3>{{ article.pk }} 번째 글</h3>
+  <hr>
+  <p>제목 : {{ article.title }}</p>
+  <p>내용 : {{ article.content }}</p>
+  <p>작성시각 : {{ article.created_at }}</p>
+  <p>수정시각 : {{ article.updated_at }}</p>
+  <hr>
+  {% if user == article.user %}
+  <a href="{% url 'articles:update' article.pk %}">[UPDATE]</a>
+  <form action="{% url 'articles:delete' article.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="DELETE">
+
+  </form>
+  {% endif %}
+  <a href="{% url 'articles:index' %}">[back]</a>
+  <hr>
+  <h4>댓글 목록</h4>
+  {% if comments %}
+    <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+  {% endif %}
+  <ul id="comment-list">
+    {% for comment in comments %}
+      <li>
+        {{ comment.user }} - {{ comment.content }}
+        {% if user == comment.user %}
+        <form action="{% url 'articles:comments_delete' article.pk comment.pk %}" method="POST" class="d-inline">
+          {% csrf_token %}
+          <input type="submit" value="DELETE">
+        </form>
+
+        {% endif %}
+      </li>
+    {% empty %}
+      <p>댓글이 없어요..</p>
+    {% endfor %}
+  </ul>
+
+  <hr>
+  {% if request.user.is_authenticated %}
+  <form id="comment-form">
+    {% csrf_token %}
+    {{ comment_form }}
+    <input type="submit">
+  </form>
+
+  {% else %}
+    <a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+  {% endif %}
+{% endblock content %}
+
+{% block script %}
+<script>
+  const form = document.querySelector('#comment-form')
+  const token = document.querySelector('[name=csrfmiddlewaretoken]').value
+  const input = document.querySelector("[name=content]")
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault()
+    // 자바스크립트에서 form 만들어서 보내는 방법
+   let data = new FormData()
+   //form 안에 데이터 포함시키는 방법
+   data.append("content", input.value)
+
+   axios({
+    method: "post",
+    url :`http://127.0.0.1:8000/articles/{{article.pk}}/comments/`,
+    data,
+    headers : {
+      "X-CSRFToken": token
+    }
+   }).then(response => {
+    const data = response.data //data안에는 게시글 pk, 댓글 pk가 들어가있음
+    const li = document.createElement("li")
+    li.innerHTML = `
+      {{request.user.username}} - ${input.value}
+      <form action="/articles/${data.article_pk}/comments/${data.comment_pk}/delete/" method="POST">
+        {% csrf_token %}
+        <input type = "submit" value="DELETE">
+      </form>
+    `
+    const ul = document.querySelector("#comment-list")
+    ul.append(li)
+    input.value = ''
+   })
+  })
+
+</script>
+
+{% endblock script %}
+

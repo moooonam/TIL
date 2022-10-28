@@ -874,3 +874,56 @@ console.log(bar)// 0
   - HTML 요소의 기본 동작 예시
     - a 태그: 클릭 시 특정 주소로 이동
     - form 태그: form 데이터 전송
+
+<br>
+<hr>
+<br>
+
+>### this
+
+<br>
+
+- 어떠한 object를 가리키는 키워드
+  - (java에서의 this와 python에서의 self는 인스턴스 자기자신을 가리킴)
+- JavaScript의 함수는 호출될 때 this를 암묵적으로 전달 받음
+- JavaScript에서의 this는 일반적인 프로그래밍 언어에서의 this와 조금 다르게 동작
+- JavaScript는 해당 함수 호출 방식에 따라 this에 바인딩 되는 객체가 달라짐
+- 즉, 함수를 선언할 때 this에 객체가 결정되는 것이 아니고, 함수를 호출할 때 함수가 어떻게 호출 되었는지에 따라 동적으로 결정됨
+
+<br>
+
+- 전역 문맥에서의 this
+  - 브라우저의 전역 객체인 window를 가리킴
+    - 전역객체는 모든 객체의 유일한 최상위 객체를 의미
+    ```js
+    console.log(this) //window
+    ```
+- 함수 문맥에서의 this
+  - 함수의 this 키워드는 다른 언어와 조금 다르게 동작
+    - this의 값은 함수를 호출한 방법에 의해 결정됨
+  1. 단순호출
+    - 전역 객체를 가리킴
+    - 전역은 브라우저에서는 window, Node.js는 global을 의미함
+  ```js
+  const myFunc = function () {
+    console.log(this)
+  }
+  // 브라우저
+  myFunc() //window
+
+  // Node.js
+  myFunc() // global
+  ```
+  2. Method(Function in Object, 객체의 메서드로서)
+    - 메서드로 선언하고 호출한다면, 객체의 메서드이므로 해당 객체가 바인딩
+  ```js
+  const myObj = {
+    data : 1,
+    myFunc() {
+        console.log(this)
+        console.log(this.data)
+    }
+  }
+
+  myObj.myFunc() //myObj //1
+  ```

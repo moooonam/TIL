@@ -55,10 +55,36 @@
   	- 대체적으로 HTML에 작성된 내용을 기반으로 하는 검색 엔진에 빈 HTML을 공유하는 SPA 서비스가 노출되기는 어려움
 
 
+<br>
+<hr>
+<br>
 
 
+> ### MVVM pattern
+
+<br>
+
+- 소프트웨어 아키텍처 패턴의 일종
+- 마크업 언어로 구현하는 그래픽 사용자 인터페이스(view)의 개발을 Back-end(model)로부터 분리시켜 view가 어느 특정한 모델 플랫폼에 종속되지 않도록 함
+
+![mvvm](https://img1.daumcdn.net/thumb/R750x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbdPccM%2FbtrFzTGgR9K%2FPvfEkR1wM64lJyjWKdytiK%2Fimg.png)
+
+- View => 우리 눈에 보이는 부분 = DOM!
+- Model => 실제 데이터 = JSON!
+- View Model(Vue)
+  - View를 위한 Model
+  - View와 연결(binding)되어 Action을 주고 받음
+  - Model이 변경되면 View Model도 변경되고 바인딩된 View도 변경됨
+  - View에서 사용자가 데이터를 변경하면 View Model의 데이터가 변경되고 바인딩된 다른 View도 변경됨
+
+<br>
+<hr>
+<br>
 
 
+> ### Vue instance
+
+<br>
 
 
 
@@ -73,6 +99,8 @@
 
 
 > ### Vue Style Guide
+
+<br>
 
 - 우선순위
   - A: 필수(Essential)

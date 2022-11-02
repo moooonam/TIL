@@ -472,3 +472,49 @@ const app2 = new Vue({
 
   - D: 주의필요
    
+<br>
+<hr>
+<br>
+
+
+> ### Vue life cycle
+
+<br>
+
+1. created : 뷰 인스턴스 초기화 단계
+   - 뷰의 컴포넌트에는 접근이 불가능한 단계, 데이터만 초기화를 한다.
+   - 실행 순서 : 상위컴포넌트 => 하위컴포넌트
+
+2. mounted: 컴포넌트를 렌더링 하는 단계
+   - 컴포넌트에 접근이 가능해진다.
+   - 실행 순서: 하위컴포넌트 => 상위컴포넌트
+
+3. updated : 컴포넌트의 속성들에서 변경이 일어났다거나 또는 어떤 이유로 컴포넌트의 재 랜더링이 일어난 경우에 실행 
+  
+4. destroyed: 뷰 인스턴스가 제거되는 단계
+
+
+<br>
+<hr>
+<br>
+
+
+> ### Vue CLI
+
+<br>
+
+- Vue 개발을 위한 표준 도구
+- 프로젝트의 구성을 도와주는 역할
+- 확장 플러그인, GUI, Babel등 다양한 tool 제공
+- Vue CLI Quick Start
+  - 설치
+    - $ npm install -g @vue/cli
+  - 프로젝트 생성
+    - $ vue create vue-cli
+  - Vue 버전 선택
+  - 프로젝트 실행
+    - npm run serve
+- Vue CLI 프로젝트 구조
+  - node_modules
+    - node.js 환경의 여러 의존성 모듈
+    - python의 venv와 비슷한 역할을함 => 따라서 .gitignore에 넣어주어야 하며, Vue 프로젝트를 생성하면 자동으로 추가됨

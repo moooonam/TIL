@@ -518,3 +518,39 @@ const app2 = new Vue({
   - node_modules
     - node.js 환경의 여러 의존성 모듈
     - python의 venv와 비슷한 역할을함 => 따라서 .gitignore에 넣어주어야 하며, Vue 프로젝트를 생성하면 자동으로 추가됨
+  - Module
+    - 개발하는 어플리케이션의 크기가 커지고 복잡해지면 파일 하나에 모든 기능을 담기가 어려워짐
+    - 따라서 자연스럽게 파일을 여러 개로 분리하여 관리를 하게 되었고, 이때 분리된 파일 각각이(module) 즉 js파일 하나가 하나의 모듈
+    - 모듈은 대개 기능 단위로 분리하며, 클래스 하나 혹은 특정한 목적을 가진 복수의 함수로 구성된 라이브러리 하나로 구성됨
+    - Module 의존성 문제
+      - 모듈의 수가 많아지고 라이브러리 혹은 모듈 간의 의존성(연결성)이 깊어지면서 특정한 곳에서 발생한 문제가 어떤 모듈 간의 문제인지 파악하기 어려움
+  - Bundler
+    - 모듈 의존성 문제를 해결해주는 작업이 Bundling
+    - 이러한 일을 해주는 도구가 Bundler이고, Webpack은 다양한 Bundler 중 하나
+    - 모듈들을 하나로 묶어주고 묶인 파일은 하나(혹은 여러개)로 만들어짐
+    - Bundling된 결과물은 개별 모듈의 실행 순서에 영향을 받지 않고 동작하게 됨
+    - snowpack, parcel, rollup.js등의 webpack 이외에도 다양한 모듈 번들러 존재
+    - Vue CLI는 이러한 Babel,Webpack에 대한 초기 설정이 자동으로 되어 있음
+  - package-lock.json
+    - node_modules에 설치되는 모듈과 관련된 모든 의존성을 설정 및 관리
+    - 협업 및 배포 환경에서 정확히 동일한 종속성을 설치하도록 보장하는 표현
+    - 사용 할 패키지의 버전을 고정
+    - 개발 과정 간의 의존성 패키지 충돌 방지
+    - python의 requirements.txt 역할
+  - src/
+    - src/assets
+      - 정적 파일을 저장하는 디렉토리
+    - src/components
+      - 하위 컴포넌트들이 위치
+    - src/App.vue
+      - 최상위 컴포넌트
+      - public/index.html과 연결됨
+
+<br>
+<hr>
+<br>
+
+
+> ### Component
+
+<br>

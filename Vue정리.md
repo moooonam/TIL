@@ -554,3 +554,92 @@ const app2 = new Vue({
 > ### Component
 
 <br>
+
+- Vue component 구조
+  - 템플릿(HTML)
+    - HTML의 body 부분
+    - 눈으로 보여지는 요소 작성
+    - 다른 컴포넌트를 HTML 요소처럼 추가 가능
+  - 스크립트(JavaScript)
+    - JavaScript 코드가 작성되는 곳
+    - 컴포넌트 정보, 데이터, 메서드 등 vue 인스턴스를 구성하는 대부분이 작성 됨
+  - 스타일(CSS)
+    - CSS가 작성되며 컴포넌트의 스타일을 담당
+  - Vue component 구조 정리
+    - 컴포넌트들이 tree 구조를 이루어 하나의 페이지를 만듦
+    - root에 해당하는 최상단의 component가 App.vue
+    - 이 App.vue를 index.html과 연결
+    - 결국 index.html 파일 하나만을 rendering
+      - 이게 바로 SPA
+
+<br>
+
+- Vue component 실습
+  1. src/components/ 안에 생성
+  2. script에 이름 등록
+  3. template에 요소 추가
+```html
+// MyComponent.vue
+<template>
+  <div>
+    <h1>This is my component</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MyComponent',
+
+}
+</script>
+
+<style>
+
+</style>
+```
+
+- component 등록 3단계
+  1. 불러오기
+    - import {instanve name} from {위치}
+    - instance name은 instance 생성 시 작성한 name
+    - @는 src의 shorcut => .vue 생략 가능
+  2. 등록하기
+  3. 보여주기
+    - 닫는 태그만 있는 요소처럼 사용
+```html
+<template>
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <!-- 3. 보여주기-->
+    <MyComponent/>
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
+</template>
+
+<script>
+import HelloWorld from './components/HelloWorld.vue'
+//1. 불러오기
+// import MyComponent from './components/MyComponent.vue'
+import MyComponent from '@/components/MyComponent'
+
+export default {
+  name: 'App',
+  components: {
+    HelloWorld,
+    //2. 등록하기
+    MyComponent
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```

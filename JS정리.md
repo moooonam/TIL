@@ -104,7 +104,7 @@ console.log(bar)// 0
   - Template literals(템플릿 리터럴)
     - 내장된 표현식을 허용하는 문자열 작성 방식
     - Backtick(``)을 이용
-    - $와 중괄호 ($ {expression})로 표기하여 표현식 가능(파이썬의 f-string이랑 비슷)
+    - `$` 와 중괄호 (`$ {expression}`)로 표기하여 표현식 가능(파이썬의 f-string이랑 비슷)
   
   ```js
   const word =`안녕

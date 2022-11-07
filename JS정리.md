@@ -1339,3 +1339,21 @@ export default new Vuex.Store({
   },
 </script>
 ``` 
+
+<br>
+<hr>
+<br>
+
+>### Lifecycle Hooks 
+
+<br>
+
+- 각 Vue 인스턴스는 생성과 소멸의 과정 중 단계별 초기화 과정을 거침
+  - Vue 인스턴스가 생성된 경우, 인스턴스를 DOM에 마운트하는 경우, 데이터가 변경되어 DOM를 업데이트하는 경우 등
+  - 각 단계가 트리거가 되어 특정 로직을 실행할 수 있음
+  - 이를 Lifecycle Hooks이라고 함
+
+![lifecycle hooks](https://vuejs.org/assets/lifecycle.16e4c08e.png)
+
+- 실습은 <a href="https://github.com/moooonam/TIL/tree/master/11%EC%9B%94/1107til/lifecyclehook"> 1107til</a> 참고
+

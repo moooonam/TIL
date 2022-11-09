@@ -1,7 +1,7 @@
 <template>
   <div class="d-grid gap-2 col-11 mx-auto my-3" >
     <button @click="pickMenu"  
-    class="btn btn-outline-success text-dark " type="button" 
+    class="btn btn-outline-success text-dark justify-content-between" type="button" 
     :class="{ 'picked' : menu.selected }"
     style="width:350px"> <img :src="menu.image" class="float-start" height="40" width="40">  
         {{ menu.title }}  

@@ -961,3 +961,86 @@ export default new Vuex.Store({
 ![lifecycle hooks](https://vuejs.org/assets/lifecycle.16e4c08e.png)
 
 - 실습은 <a href="https://github.com/moooonam/TIL/tree/master/11%EC%9B%94/1107til/lifecyclehook"> 1107til</a> 참고
+
+
+<br>
+<hr>
+<br>
+
+## Vue Router 
+
+<br>
+
+>### Routing
+
+<br>
+
+- 네트워크에서 경로를 선택하는 프로세스
+- 웹 서브스에서의 라우팅
+  - 유저가 방문한 URL에 대해 적절한 결과를 응답하는 것
+- Server가 모든 라우팅을 통제
+- URL로 요청이 들어오면 응답으로 완성된 HTML 제공
+  - Django로 보낸 요청의 응답 HTML은 완성본인 상태였음
+- 결론적으로, Routing(URL)에 대한 결정권을 서버가 가짐
+
+<br>
+
+- Routing in SPA/CSR
+  - 서버는 하나의 HTML(index.html)만을 제공
+  - 이후에 모든 동작은 하나의 HTML 문서 위에서 JavaScript 코드를 활용
+    - DOM을 그리는데 필요한 추가적인 데이터가 있다면 axios와 같은 AJAX 요청을 보낼 수 있는 도구를 사용하여 데이터를 가져오고 처리
+  - 즉, **하나의 URL만 가질 수 있음**
+- Why routing?
+  - 그럼 동작에 따라 URL이 반드시 바뀌어야 하나? => 그렇지는 않다! 단 유저의 사용성 관점에서는 필요함
+- Routing이 없다면,
+  - 유저가 URL을 통한 페이지의 변화를 감지할 수 없음
+  - 페이지가 무엇을 렌더링 중인지에 대한 상태를 알 수 없음
+    - 새로고침 시 처음 페이지로 돌아감
+    - 링크를 공유할 시 처음 페이지만 공유 가능
+  - 브라우저의 뒤로 가기 기능을 사용할 수 없음
+
+<br>
+<hr>
+<br>
+
+>### Vue Router
+
+<br>
+
+- Vue의 공식 라우터
+- SPA 상에서 라우팅을 쉽게 개발할 수 있는 기능을 제공
+- 라우트(routes)에 컴포넌트를 매핑한 후, 어떤 URL에서 렌더링 할지 알려줌
+  - 즉, SAP를 MPA처럼 URL을 이동하면서 사용 가능
+  - SPA의 단점 중 하나인 "URL이 변경되지 않는다."를 해결
+  - MPA(Multiple Page Application)
+    - 여러 개의 페이지로 구성된 애플리케이션
+    - SSR 방식으로 렌더링
+
+<br>
+
+- Vue Router 시작하기
+  - Vuex와 마찬가리의 방식으로 설치 및 반영
+  - $ vue create vue-router-app
+  - $ cd vue-router-app
+  - $ vue add router
+
+<br>
+
+- router-link
+  - a 태그와 비슷한 기능 => URL을 이동시킴
+    - routes에 등록된 컴포넌트와 매핑됨
+    - 히스토리 모드에서 router-link는 클릭 이벤트를 차단하여 a 태그와 달리 브라우저가 페이지를 다시 로드 하지 않도록 함
+    - 목표 경로는 'to'속성으로 지정됨
+    - 기능에 맞게 HTML에서 a태그로 rendering 되지만, 필요에 따라 다른 태그로 바꿀 수 있음
+  ```html
+  <router-link :to="{ name: 'home' }">Home</router-link>
+  ```
+<br>
+
+- router-view
+  - 주어진 URL에 대해 일치하는 컴포넌트를 렌더링 하는 컴포넌트
+  - 실제 component가 DOM에 부착되어 보이는 자리를 의미
+  - router-link를 클릭하면 routes에 매핑된 컴포넌트를 렌더링.
+  - Django에서의 block tag와 비슷함
+    - App.vue는 base.html의 역할
+    - router-view는 block 태그로 감싼 부분

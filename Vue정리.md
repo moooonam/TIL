@@ -644,6 +644,8 @@ export default {
 </style>
 ```
 
+## props emit 추가
+
 >### Vuex 
 
 <br>

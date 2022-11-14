@@ -392,7 +392,7 @@ const app2 = new Vue({
 
 <br>
 
-- v-modle
+- v-model
   - Vue instance와 DOM의 양방향 바인딩
   - Vue data 변경 시 v-model로 연결된 사용자 입력 element에도 적용
 
@@ -1046,3 +1046,194 @@ export default new Vuex.Store({
   - Django에서의 block tag와 비슷함
     - App.vue는 base.html의 역할
     - router-view는 block 태그로 감싼 부분
+
+<br>
+
+- src/router/index.js
+  - 라우터에 관련된 정보 및 설정이 작성 되는 곳
+  - Django에서의 urls.py에 해당
+  - routes에 URL과 컴포넌트를 매핑
+
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import IndexView from '../views/IndexView.vue'
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    name: 'index',
+    component: IndexView
+  },
+]
+
+```
+
+<br>
+
+- src/Views
+  - router-view에 들어갈 component 작성
+  - 기존에 컴포넌트를 작성하던 곳은 components 폴더 뿐이었지만 이제 두 폴더로 나뉘어짐
+  - 각 폴더 안에 .vue파일들이 기능적으로 다른 것은 아님
+  - 이제 폴더별 컴포넌트 배치는 다음과 같이 진행
+    - views/
+      - routes에 매핑되는 컴포넌트, 즉 `<router-view>`의 위치에 렌더링 되는 컴포넌트를 모아두는 폴더
+      - 다른 컴포넌트와 구분하기 위해 View로 끝나도록 만드는 것을 권장
+    - components/
+      - routes에 매핑된 컴포넌트의 하위 컴포넌트를 모아두는 폴더
+
+<br>
+
+- 주소를 이동하는 2가지 방법
+  1. 선언적 방식 네비게이션
+  2. 프로그래밍 방식 네비게이션
+
+<br>
+
+- 선언적 방식 네비게이션
+  - router-link의 'to'속성으로 주소 전달
+  - routes에 등록된 주소와 매핑된 컴포넌트로 이동
+```html
+
+// App.vue
+
+<template>
+  <div id="app">
+    <nav>
+      <router-link :to="{ name: 'home' }">Home</router-link> |
+      <router-link :to="{ name: 'about' }">About</router-link> |
+    </nav>
+    <router-view/>
+  </div>
+</template>
+
+```
+
+- Named Routes
+  - 이름을 가지는 routes
+  - Django에서 path 함수의 name 인자의 활용과 같은 방식
+```js
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+]
+```
+- 동적인 값을 사용하기 때문에 v-bind를 사용해야 정상적으로 작동 (to가 아니라 :to로 써야함)
+
+<br>
+
+- 프로그래밍 방식 네비게이션
+  - Vue 인스턴스 내부에서 라우터 인스턴스에 $router로 접근 할 수 있음
+  - 다른 URL로 이동하려면 `this.$router.push`를 사용
+    - history stack에 이동할 URL을 넣는(push) 방식
+    - history stack에 기록이 남기 때문에 사용자가 브라우저의 뒤로 가기 버튼을 클릭하면 이전 URL로 이동할 수 있음
+  - 결국 `<router-link :to="...">`을 클릭하는 것과 $router.push(...)를 호출하는 것은 같은 동작
+
+<br>
+
+- Dynamic Route Matching
+  - 동적 인자 전달
+    - URL의 특정 값을 변수처럼 사용할 수 있음
+  - ex) Django에서의 variable routing
+
+```js
+// router/index.js
+
+import HelloView from '@/views/HelloView.vue'
+
+const routes =[
+  ...,
+  {
+    path: '/hello/:userName',
+    name: 'hello',
+    component: HelloView
+  }
+]
+```
+
+- $route.params로 변수에 접근 가능
+
+```html
+// views/HelloView.vue
+
+<template>
+  <div>
+    <h1>hello, {{ $route.params.userName }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HelloView',
+}
+</script>
+```
+
+- 다만 HTML에서 직접 사용하기 보다는 data에 넣어서 사용하는 것을 권장
+
+```html
+// views/HelloView.vue
+
+<template>
+  <div>
+    <h1>hello, {{ userName }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HelloView',
+  data() {
+    return {
+      userName: this.$route.params.userName
+    }
+  }
+}
+</script>
+```
+
+- Dynamic Route Matching - 선언적 방식 네비게이션
+  - params를 이용하여 동적 인자 전달 가능
+
+```html
+
+// App.vue
+
+<template>
+  <div id="app">
+    <nav>
+      <router-link :to="{ name: 'home' , params: { userName: 'harry' }}">Home</router-link> |
+      <router-link :to="{ name: 'about' }">About</router-link> |
+    </nav>
+    <router-view/>
+  </div>
+</template>
+```
+
+<br>
+
+- route에 컴포넌트를 등록하는 또다른 방법
+- => lazy-loading
+  - 모든 파일을 한 번에 로드하려고 하면 모든 걸 다 읽는 시간이 매우 오래 걸림
+  - 미리 로드를 하지 않고 특정 라우트에 방문할 때 매핑된 컴포넌트의 코드를 로드하는 방식을 활용할 수 있음
+    - 모든 파일을 한 번에 로드하지 않아도 되기 때문에 최초에 로드하는 시간이 빨라짐
+    - 당장 사용하지 않을 컴포넌트는 먼저 로드하지 않는 것이 핵심
+
+- Lazy-loading
+
+```js
+// router/index.js
+
+const routes = [
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/AboutView.vue'),
+  }
+]
+
+```

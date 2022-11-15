@@ -9,8 +9,13 @@
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
         <router-link :to="{ name: 'Login' }">Login</router-link> 
       </span>
+      <button v-show="(this.login)"
+        @click="logOut"
+      >Loggout</button>
     </div>
-    <router-view/>
+    <router-view
+      @login = "loginCheck"
+    />
   </div>
 </template>
 
@@ -19,13 +24,33 @@ export default {
   name: 'App',
   data: function () {
     return {
-
+      login :false,
     }
   },
   methods: {
-
+    loginCheck(){
+      this.login = true
+    },
+    is_logined() {
+      if (window.localStorage.getItem('jwt')) {
+        this.login = true
+      } else {
+        this.login = false
+      }
+    },
+    logOut() {
+      window.localStorage.removeItem('jwt')
+      this.$router.push({name: "Login"})
+      this.login = false
+    }
   },
-}
+  created() {
+    this.is_logined() 
+    console.log(this.login)
+      
+    }
+  }
+
 </script>
 
 

@@ -32,6 +32,10 @@ export default {
         method: 'post',
         url: `${API_URL}/todos/`,
         data: { title },
+        headers:{
+          Authorization: `Bearer ${window.localStorage.getItem('jwt')}`
+        }
+
       
       })
       .then(() => {

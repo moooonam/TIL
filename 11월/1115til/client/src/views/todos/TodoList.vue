@@ -36,7 +36,7 @@ export default {
         url: 'http://127.0.0.1:8000/todos/',
       })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           this.todos = res.data
         })
         .catch(err => {
@@ -47,7 +47,10 @@ export default {
       const id = todo.id
       axios({
         method: 'DELETE',
-        url: `${API_URL}/todos/${id}/`
+        url: `${API_URL}/todos/${id}/`,
+        headers:{
+          Authorization: `Bearer ${window.localStorage.getItem('jwt')}`
+        }
       })
       // .then(() =>{
       //   this.$router.push({ name: 'TodoList' })
@@ -63,7 +66,10 @@ export default {
       axios({
         method: 'PUT',
         url: `${API_URL}/todos/${id}/`,
-        data:{title,is_completed}
+        data:{title,is_completed},
+        headers:{
+          Authorization: `Bearer ${window.localStorage.getItem('jwt')}`
+        }
       })
       .then(() => {
         this.getTodos()

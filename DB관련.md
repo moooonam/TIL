@@ -20,6 +20,7 @@
     }
 }
 ```
+- 위에거 하고 migrate
 
 - use {db이름}
 - show tables;

@@ -1025,6 +1025,51 @@ export default new Vuex.Store({
   - $ vue create vue-router-app
   - $ cd vue-router-app
   - $ vue add router
+- vue3부터는 vue-router가 아닌 vue-router@next를 설치해줘야함...
+  - npm i vue-router@next --save
+  - src 아래 router폴더를 생성하고 그 안에 index.js파일을 만듬
+   ```js
+    import { createRouter, createWebHistory } from "vue-router";
+    // 연결할 각 컴포넌트 import (보통 src/views폴더 아래 컴포넌틑들 생성해둠 )
+    import HelloWorld from '../components/HelloWorld.vue'
+    import MyComp from '../components/MyComp.vue'
+
+    // 라우터 설계
+
+    const routes = [
+        { path: '/', component:HelloWorld}, //메인 홈화면
+        { path: '/1', component:MyComp },
+    ]
+    // 라우터 생성
+    const router = createRouter({
+        history: createWebHistory(),
+        routes
+    });
+
+    // 라우터 추출(main.js에서 import)
+    export {router}
+   ```
+   - 뷰라우터 사용은 main.js에서 use를 통해 할 수 있다. 메인 뷰파일에 템플릿에는 `<router-view>`태그를 통해 경로에 따라 다른 컴포넌트들이 올 수 있게 한다.
+   ```js
+    import { createApp } from 'vue'
+    import App from './App.vue'
+
+    // 생성한 뷰 라우터 받아오기
+    import { router } from './router/index.js'
+
+    const app = createApp(App)
+    app.use(router)  // 라우터 사용
+    app.mount('#app')
+    ```
+    - src/App.vue
+    ```html
+    <template>
+      <div id="app">
+        <!-- uri에 따라 해당 컴포넌트가 router-view를 대신함 -->
+        <router-view></router-view>
+      </div>
+    </template>
+    ```
 
 <br>
 
@@ -1237,3 +1282,8 @@ const routes = [
 ]
 
 ```
+
+### 시작하기
+- vue create 앱이름
+- vue add vuex //vuex 추가
+- 

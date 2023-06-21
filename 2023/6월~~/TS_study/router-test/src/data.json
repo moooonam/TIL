@@ -1,0 +1,24 @@
+{
+    "Studentsdata": {
+        "student": [
+            {
+                "id":0,
+                "name": "무남",
+                "age":28,
+                "isGrilfriend": true
+            },
+            {
+                "id":1,
+                "name": "무남1",
+                "age":28,
+                "isGrilfriend": true
+            },
+            {
+                "id":2,
+                "name": "무남2",
+                "age":28,
+                "isGrilfriend": true
+            }
+        ]
+    }
+}

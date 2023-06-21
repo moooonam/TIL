@@ -14,3 +14,4 @@ const RouterPropTest = () => {
 };
 
 export default RouterPropTest;
+

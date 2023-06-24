@@ -2,7 +2,7 @@
 
 <hr>
 
-- app.tsx (라우터 쓰는법)
+- ## app.tsx (라우터 쓰는법)
 ```tsx
 import Home from "./routes/Home";
 import About from "./routes/About";
@@ -32,7 +32,7 @@ export default App;
 
 <hr>
 
-- Link로 프롭 넘기기
+- ## Link로 프롭 넘기기
 ```tsx
 // RouterProp
 import { Link } from "react-router-dom"
@@ -80,4 +80,38 @@ const RouterPropTestResult = () => {
 };
 
 export default RouterPropTestResult;
+```
+
+- ## url 파라미터
+```tsx
+// App.jsx
+<Route path="/studentslist/:id" element={<StudentDetail />} />
+// id값이 url에 들어갈거야!
+
+// StudentList.jsx
+<div>
+    <h1>학생명단</h1>
+      <div>
+        {students.map((student) => (
+            <h4 key={student.id}>
+                <Link to={`/studentslist/${student.id}`}> // url에 id값넣기
+                    {student.name}
+                  </Link>
+            </h4>
+          )
+        )}
+      </div>
+</div>
+
+// StudentDetail.jsx
+const StudentDetail = () => {
+    const params = useParams() // use Params를 통해 받음 {id: '0'} <= 이런식으로 출력됨
+    console.log(params)
+    return (
+        <div>
+            <h1>학생디테일</h1>
+        </div>
+    );
+};
+// eact-router-dom v6 이상인 경우, useParams() 만 쓰더라도 타입이 string | undefined 일 거라고 알아서 예상해 준다고 한다...
 ```

@@ -349,6 +349,11 @@
   - class의 경우 다양한 형태로 연결 가능
     - 조건부 바인딩
       - {'class Name':'조건 표현식'}
+    - Vue.js에서 태그 안에 :class가 들어가면 이는 "동적 클래스 바인딩"을 의미합니다.
+    ```html
+    <div :class="{ 'class-name': condition }"></div>
+    ```
+    - 위의 예제에서 class-name은 클래스의 이름이고, condition은 평가되는 표현식입니다. condition의 결과가 true이면 해당 요소에 class-name 클래스가 추가되고, false이면 제거됩니다.
       - 삼항 연산자도 가능
     - 다중 바인딩
       - ['JS표현식', 'JS표현식',...]
@@ -472,28 +477,6 @@ const app2 = new Vue({
 
   - D: 주의필요
    
-<br>
-<hr>
-<br>
-
-
-> ### Vue life cycle
-
-<br>
-
-1. created : 뷰 인스턴스 초기화 단계
-   - 뷰의 컴포넌트에는 접근이 불가능한 단계, 데이터만 초기화를 한다.
-   - 실행 순서 : 상위컴포넌트 => 하위컴포넌트
-
-2. mounted: 컴포넌트를 렌더링 하는 단계
-   - 컴포넌트에 접근이 가능해진다.
-   - 실행 순서: 하위컴포넌트 => 상위컴포넌트
-
-3. updated : 컴포넌트의 속성들에서 변경이 일어났다거나 또는 어떤 이유로 컴포넌트의 재 랜더링이 일어난 경우에 실행 
-  
-4. destroyed: 뷰 인스턴스가 제거되는 단계
-
-
 <br>
 <hr>
 <br>
@@ -645,6 +628,44 @@ export default {
 ```
 
 ## props emit 추가
+- #### props 
+  - ```
+    <!--부모 컴포넌트-->
+    <template>
+        <!--첫번째, 두번째 모두 같은 결과-->
+        <!--첫번째 방법-->
+        <자식컴포넌트이름 :props이름="전달데이터"/>
+        <!--두번째 방법-->
+        <자식컴포넌트이름 v-bind:props이름="전달데이터"/>
+    </template>
+    <!--자식에서 받을때-->
+     props : {
+      props이름 : Array
+    } 
+    <!--아니면 이런식으로 타입, 티폴트도 정해줄수있음-->
+    props: {
+      // userName: String,
+      
+      // 아래와 같이 default값을 지정할 수 있다.
+      userName: {
+        type: String,
+        default: "I'm default"
+      },
+    },
+    ```
+- #### emit
+  ```js
+  <!--자식에서 이런식으로 에밋을 보낸다 에밋에 첫번째 인자는 무조건 스트링으로 키 역할을 한다.-->
+   methods: {
+    onVideoSelect() {this.$emit('selectVideo',this.video)}
+  }
+  <!--그럼 부모에서 컴포넌트를 불러올때 이런식으로 불러오고 자식에서 에밋을 한 시점에서 부모의 메서드에 있는 onVideoSelect을 실행하게 된다.-->
+  <VideoItem @selectVideo="onVideoSelect"/>
+     methods: {
+
+    	onVideoSelect(video) {실행할거}
+  }
+  ```
 
 >### Vuex 
 
@@ -965,6 +986,42 @@ export default new Vuex.Store({
 - 실습은 <a href="https://github.com/moooonam/TIL/tree/master/11%EC%9B%94/1107til/lifecyclehook"> 1107til</a> 참고
 
 
+> ### Vue life cycle
+
+<br>
+
+#### 1. Creation: 컴포넌트 초기화 단계 
+- beforeCreate
+  - Vue 인스턴스가 초기화 된 직후에 발생된다. 컴포넌트가 DOM에 추가되기도 전이어서 this.$el에 접근할 수 없습니다. 또한 data, event, watcher에도 접근하기 전이라 data, methods에도 접근할 수 없다.
+  - 
+- created
+   - 뷰의 컴포넌트에는 접근이 불가능한 단계, 데이터만 초기화를 한다.
+   - 실행 순서 : 상위컴포넌트 => 하위컴포넌트
+   - data를 반응형으로 추적할 수 있게 되며 computed, methods, watch 등이 활성화 되어 접근이 가능하게 된다. 하지만 아직까지 DOM에는 추가되지 않은 상태이다.
+   - data에 직접 접근이 가능하기 때문에, 컴포넌트 초기에 외부에서 받아온 값들로 data를 세팅해야 하거나 이벤트 리스너를 선언해야 한다면 이 단계에서 하는 것이 가장 적절하다.
+#### 2. Mounting: DOM 삽입 단계 
+- beforeMount
+  - DOM에 부착하기 직전에 호출되는 beforeMount 훅이다. 이 단계 전에서 템플릿이 있는지 없는지 확인한 후 템플릿을 렌더링 한 상태이므로, 가상 DOM이 생성되어 있으나 실제 DOM에 부착되지는 않은 상태이다.
+- mounted: 컴포넌트를 렌더링 하는 단계
+  - 가상 DOM의 내용이 실제 DOM에 부착되고 난 이후에 실행되므로, this.$el을 비롯한 data, computed, methods, watch 등 모든 요소에 접근이 가능하다
+   - 컴포넌트에 접근이 가능해진다.
+   - 실행 순서: 하위컴포넌트 => 상위컴포넌트
+#### 3. Updating: Diff 및 Re-rendering 단계
+- beforeUpdate
+  - 컴포넌트에서 사용되는 data의 값이 변해서, DOM에도 그 변화를 적용시켜야 할 때가 있다. 이 때, 변화 직전에 호출되는 것이 바로 beforeUpdate훅이다. 변할 값을 이용해 가상 DOM을 렌더링하기 전이지만, 이 값을 이용해 작업할 수는 있다. 이 훅에서 값들을 추가적으로 변화시키더라도 랜더링을 추가로 호출하지는 않는다.
+- updated 
+  - 컴포넌트의 속성들에서 변경이 일어났다거나 또는 어떤 이유로 컴포넌트의 재 랜더링이 일어난 경우에 실행
+  - 다만 이 훅에서 data를 변경하는 것은 무한 루프를 일으킬 수 있으므로 이 훅에서는 데이터를 직접 바꾸어서는 안된다.
+#### 4. Destruction: 해체 단계
+- beforeDestroy
+  - 해당 인스턴스가 해체되기 직전에 beforeDestroy훅이 호출된다. 아직 해체되기 이전이므로, 인스턴스는 완전하게 작동하기 때문에 모든 속성에 접근이 가능하다. 이 단계에서는 이벤트 리스너를 해제하는 등 인스턴스가 사라지기 전에 해야할 일들을 처리하면 된다.
+- destroyed: 뷰 인스턴스가 제거되는 단계
+
+
+<br>
+<hr>
+<br>
+
 <br>
 <hr>
 <br>
@@ -1283,6 +1340,47 @@ const routes = [
 
 ```
 
+<br>
+<br>
+
+- Vue Router 접근권한 체크(네비게이션 가이드)
+  - beforeEnter
+  - 여르 라우터를 타고 다닐때 로그인한 유저(권한이 있는)만 해당 path 로 들어가게 하려면 라우터에서 생성되기 전에 체크를 해주면 된다!
+  - 이 훅이 바로 beforeEnter 이다.
+  ```js
+  import Vue from 'vue';
+  import store from '../store/index';
+  import Router from 'vue-router';
+  import Home from '@/components/Login';
+  import RoomList from '@/components/RoomList';
+
+  Vue.use(Router);
+
+  const requireAuth = () => (to, from, next) => {
+    if (store.state.accessToken !== '') {
+      return next();
+    }
+    next('/login');
+  };
+
+  export default new Router({
+    mode: 'history',
+    routes: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login
+      },
+      {
+        path: '/roomlist',
+        name: 'RoomList',
+        component: RoomList,
+        beforeEnter: requireAuth()
+      },
+    ...]
+    })
+  ```
+  - 이런식으로 해주면 스토어에 accessToken이 있을때만 next()를 하고 아니면 로그인으로 보낸다.
 ### 시작하기
 - vue create 앱이름
 - vue add vuex //vuex 추가
